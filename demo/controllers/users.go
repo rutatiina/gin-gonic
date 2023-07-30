@@ -19,6 +19,8 @@ func List(c *gin.Context) {
 
 	// log.Println(users)
 
+	go services.LogToSlack("This is run in a separate process")
+
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Users",
 		"payload": models,
@@ -123,6 +125,11 @@ func VoidDestroyed(c *gin.Context) {
 	var model models.User
 	if err := services.DB.Unscoped().Where("id = ?", c.Param("id")).First(&model).Error; err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+
+	if !model.DeletedAt.Valid {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found. Only deleted items can be voided"})
 		return
 	}
 
