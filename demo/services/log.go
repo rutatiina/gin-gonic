@@ -6,7 +6,7 @@ import (
 )
 
 func LogToSlack(msg string) {
-	url := "https://hooks.slack.com/services/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"
+	url := "we hook url"
 
 	jsonStr := []byte(`{"text":"` + msg + `"}`)
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonStr))
