@@ -36,7 +36,7 @@ type UserUpdate struct {
 	// ID           uint   `uri:"id" binding:"required" gorm:"primarykey"`
 	Name         string    `json:"name,omitempty" binding:"omitempty,alphanum"`
 	Email        string    `json:"email,omitempty" binding:"omitempty,email"`
-	Age          uint8     `json:"age,omitempty"`
+	Age          uint8     `json:"age,omitempty" binding:"omitempty,numeric"`
 	Birthday     time.Time `json:"birthday,omitempty"`
 	MemberNumber sql.NullString
 	ActivatedAt  sql.NullTime
