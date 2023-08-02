@@ -1,6 +1,10 @@
 package services
 
 import (
+	"encoding/json"
+	"fmt"
+	"io"
+	"os"
 	"wese/demo/models"
 
 	"gorm.io/driver/mysql"
@@ -11,7 +15,23 @@ var DB *gorm.DB
 
 func DatabaseConnectAndMigrate() {
 
-	var dsn = "root:rutatiina@tcp(127.0.0.1:3306)/rg_gin_tonic?charset=utf8mb4&parseTime=true&loc=Local"
+	// Open our jsonFile
+	confFile, _err := os.Open("../conf.json")
+
+	if _err != nil {
+		panic("Failed to read conf file!")
+	}
+
+	// defer the closing of our jsonFile so that we can parse it later on
+	defer confFile.Close()
+
+	byteValue, _ := io.ReadAll(confFile)
+
+	var config map[string]interface{}
+	json.Unmarshal([]byte(byteValue), &config)
+
+	// var dsn = "root:rutatiina@tcp(127.0.0.1:3306)/rg_gin_tonic?charset=utf8mb4&parseTime=true&loc=Local"
+	var dsn = fmt.Sprint(config["mysql_username"]) + ":" + fmt.Sprint(config["mysql_password"]) + "@tcp(" + fmt.Sprint(config["mysql_db_path"]) + ")/" + fmt.Sprint(config["mysql_db_name"]) + "?charset=utf8mb4&parseTime=true&loc=Local"
 
 	var db, err = gorm.Open(mysql.New(mysql.Config{
 		DSN:                       dsn,   // data source name

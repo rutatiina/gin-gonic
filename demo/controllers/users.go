@@ -1,7 +1,9 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
+	"net/smtp"
 
 	"wese/demo/models"
 	"wese/demo/services"
@@ -9,6 +11,45 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
 )
+
+func Others(c *gin.Context) {
+
+	// log.Println(users)
+	// go services.LogToSlack("This is run in a separate process")
+	fmt.Println("SMTP login test")
+
+	// Sender data.
+	from := "wese@hotel.inc.ug"
+	password := ""
+
+	// Receiver email address.
+	to := []string{
+		"rutatiina@riginem.org",
+	}
+
+	// smtp server configuration.
+	smtpHost := ""
+	smtpPort := ""
+
+	// Message.
+	message := []byte("This is a test email message.")
+
+	// Authentication.
+	auth := smtp.PlainAuth("", from, password, smtpHost)
+
+	// Sending email.
+	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, message)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	fmt.Println("Email Sent Successfully!")
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "Users",
+		"payload": "okay",
+	})
+}
 
 // GET /books
 // Find all books
@@ -19,13 +60,12 @@ func List(c *gin.Context) {
 
 	// log.Println(users)
 
-	go services.LogToSlack("This is run in a separate process")
+	// // go services.LogToSlack("This is run in a separate process")
 
 	c.JSON(http.StatusOK, gin.H{
 		"message": "Users",
 		"payload": models,
 	})
-
 }
 
 // GET /books/:id

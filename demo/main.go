@@ -20,5 +20,7 @@ func main() {
 	r.DELETE("/users/:id", controllers.Destroy)
 	r.DELETE("/users/:id/void", controllers.VoidDestroyed)
 
-	r.Run("localhost:8080") //Making sure localhost is there prevents the annoying mac firewall pop up
+	r.GET("/others", controllers.Others)
+
+	r.Run("localhost:8081") //Making sure localhost is there prevents the annoying mac firewall pop up
 }
