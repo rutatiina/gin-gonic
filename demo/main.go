@@ -12,6 +12,8 @@ func main() {
 
 	r := gin.Default()
 
+	//https://www.stephengream.com/go-nethttp-vs-gin/
+
 	// Routes
 	r.GET("/users", controllers.List)
 	r.GET("/users/:id", controllers.Show)
