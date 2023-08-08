@@ -4,7 +4,13 @@
             "path": "../demo"
         },
         {
-            "path": "../_module_template_"
+            "path": "../module_template"
+        },
+        {
+            "path": "../organization"
+        },
+        {
+            "path": ".."
         }
     ],
     "settings": {

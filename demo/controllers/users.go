@@ -5,8 +5,8 @@ import (
 	"net/http"
 	"net/smtp"
 
-	"wese/demo/models"
-	"wese/demo/services"
+	"wese/core/demo/models"
+	"wese/core/demo/services"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
@@ -177,4 +177,23 @@ func VoidDestroyed(c *gin.Context) {
 	services.DB.Unscoped().Delete(&model)
 
 	c.JSON(http.StatusOK, gin.H{"data": true})
+}
+
+// GET /books
+// Find all books
+func External(c *gin.Context) {
+	var models []models.User
+	services.DatabaseConnectAndMigrate()
+
+	// services.DB.Scopes(services.Paginate(c.Request)).Find(&models)
+	services.DB.Find(&models)
+
+	fmt.Println("we got here")
+
+	// go services.LogToSlack("This is run in a separate process")
+
+	c.JSON(http.StatusOK, gin.H{
+		"message": "External call rocking",
+		"payload": models,
+	})
 }

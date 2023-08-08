@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io"
 	"os"
-	"wese/demo/models"
+	"wese/core/demo/models"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"

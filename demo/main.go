@@ -1,8 +1,8 @@
 package main
 
 import (
-	"wese/demo/controllers"
-	"wese/demo/services"
+	"wese/core/demo/controllers"
+	"wese/core/demo/services"
 
 	"github.com/gin-gonic/gin"
 )
@@ -24,5 +24,5 @@ func main() {
 
 	r.GET("/others", controllers.Others)
 
-	r.Run("localhost:8081") //Making sure localhost is there prevents the annoying mac firewall pop up
+	r.Run("localhost:8080") //Making sure localhost is there prevents the annoying mac firewall pop up
 }

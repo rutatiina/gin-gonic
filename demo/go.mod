@@ -1,4 +1,4 @@
-module wese/demo
+module wese/core/demo
 
 go 1.20
 
